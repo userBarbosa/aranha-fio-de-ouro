@@ -1,12 +1,17 @@
-import express from 'express';
+import cors from "cors";
+import express, { json, urlencoded } from "express";
+import { environment } from "./config/environment";
+import userRouter from "./app/routes/users.routes";
+import logger from "./utils/logger";
 
 const app = express();
-const port = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello, TypeScript!');
-});
+app.use(cors());
+app.use(urlencoded({ extended: true }));
+app.use(json());
 
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`);
-});
+app.use("/", userRouter);
+
+app.listen(environment.PORT, () =>
+  logger.info(`Running on server on ${environment.PORT} port`)
+);
