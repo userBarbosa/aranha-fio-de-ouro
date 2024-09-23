@@ -6,6 +6,6 @@ export type TokenUserPayload = {
   id: string;
   name: string;
   email: string;
-  emailConfirmed: Date | undefined;
+  groups: string[];
 };
 export type RequestWithToken = Request & { user: TokenUserPayload };

@@ -5,20 +5,20 @@ export type User = {
   id?: string;
   name: string;
   email: string;
-  emailConfirmed?: Date,
+  groups?: string[];
 };
 
 export type UserDTO = {
   name: string;
   email: string;
   password: string;
-  emailConfirmed?: Date,
+  groups: string[];
 } & GenericDTO;
 
 export type SignInUserResponse = {
-  id: string,
-  name: string,
-  email: string,
-  emailConfirmed: Date | undefined,
-  token: string,
+  id: string;
+  name: string;
+  email: string;
+  token: string;
+  groups: string[];
 };

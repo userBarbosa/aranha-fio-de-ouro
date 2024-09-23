@@ -11,6 +11,10 @@ export enum ErrorType {
   Timeout = 504,
 }
 
+export enum ErrorMetrics {
+  InvalidCredentials = "INV_CREDS"
+}
+
 export function SuccessResponse(
   res: Response,
   data: Record<string, unknown> | Record<string, unknown>[] | string | number | boolean

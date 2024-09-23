@@ -25,7 +25,7 @@ export async function NewUser(
   password: string
 ): Promise<string | null> {
   try {
-    const id = await insertOne(COLLECTION, { name, email, password });
+    const id = await insertOne(COLLECTION, { name, email, password, groups: [] });
     return id;
   } catch (error) {
     throw {
