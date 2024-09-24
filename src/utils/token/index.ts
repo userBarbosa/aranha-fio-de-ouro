@@ -9,16 +9,16 @@ import { RequestWithToken, TokenUserPayload } from "./types";
 
 export async function createToken(data: any, customExpiration?: number) {
   try {
+    const expiresIn = customExpiration || environment.TOKEN_EXPIRATION_SECONDS;
     const token = sign(data, environment.TOKEN_SECRET, {
-      expiresIn: customExpiration || environment.TOKEN_EXPIRATION_SECONDS,
+      expiresIn,
     });
 
-    return token;
+    return { token, expiresIn };
   } catch (error) {
     logger.error("Error generating token", data);
+    throw error;
   }
-
-  return "";
 }
 
 export function validateToken(token: string): TokenUserPayload | undefined {
@@ -39,8 +39,9 @@ export function validateTokenMiddleware(
     const tokenHeader = req?.headers?.authorization;
 
     if (!tokenHeader) {
-      return ErrorResponse(res, ErrorType.NotAuthorized, { error: "token is missing" });
-
+      return ErrorResponse(res, ErrorType.NotAuthorized, {}, {
+        message: "token is missing",
+      } as Error);
     }
 
     const payload = validateToken(tokenHeader);

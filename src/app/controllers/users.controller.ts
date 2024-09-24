@@ -35,7 +35,7 @@ export async function Create(req: Request, res: Response) {
     }
 
     const token = await GetUserToken({ id, name, email });
-    return SuccessResponse(res, { id, token });
+    return SuccessResponse(res, { id, ...token });
   } catch (error) {
     log.error("error creating an user", error);
     ErrorResponse(res, ErrorType.InternalServerError, {}, error as Error);
@@ -56,7 +56,7 @@ export async function Login(req: Request, res: Response) {
       return ErrorResponse(res, ErrorType.InternalServerError);
     }
 
-    return SuccessResponse(res, { user });
+    return SuccessResponse(res, { ...user });
   } catch (error) {
     const customError = error as any;
     if (
@@ -74,7 +74,7 @@ export async function GetCurrentUser(req: Request, res: Response) {
   const log = logger.child({ func: "GetCurrentUser", layer: "controller" });
   try {
     const user = (req as RequestWithToken).user;
-    return SuccessResponse(res, { user });
+    return SuccessResponse(res, { ...user });
   } catch (error) {
     log.error("error getting current user", error);
     ErrorResponse(res, ErrorType.InternalServerError, {}, error as Error);

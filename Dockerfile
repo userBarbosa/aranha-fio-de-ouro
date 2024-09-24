@@ -1,15 +1,17 @@
-FROM node:14-alpine
 
-RUN mkdir -p /usr/src
+FROM node:18 AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-WORKDIR /usr/src
-
-COPY ./package.json /usr/src/
-COPY ./package-lock.json /usr/src/
-COPY ./dist /usr/src/dist
-
+FROM node:18
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY package*.json ./
 RUN npm install
 
+COPY .env ./
 EXPOSE 4000
-
-CMD npm run start
+CMD ["node", "dist/index.js"]

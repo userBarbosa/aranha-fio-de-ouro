@@ -19,6 +19,7 @@ export type SignInUserResponse = {
   id: string;
   name: string;
   email: string;
-  token: string;
   groups: string[];
+  token: string;
+  expiresIn: number;
 };

@@ -1,6 +1,7 @@
-'use strict'
+"use strict";
 
-import { Response } from 'express';
+import { Response } from "express";
+import { isEmpty } from "../utils";
 
 export enum ErrorType {
   BadRequest = 400,
@@ -12,27 +13,34 @@ export enum ErrorType {
 }
 
 export enum ErrorMetrics {
-  InvalidCredentials = "INV_CREDS"
+  InvalidCredentials = "INV_CREDS",
 }
 
 export function SuccessResponse(
   res: Response,
-  data: Record<string, unknown> | Record<string, unknown>[] | string | number | boolean
+  data:
+    | Record<string, unknown>
+    | Record<string, unknown>[]
+    | string
+    | number
+    | boolean
 ) {
-  res
-    .status(200)
-    .json({data, success: true})
-    .end()
+  res.status(200).json({ data, success: true }).end();
 }
 
 export function ErrorResponse(
   res: Response,
   type: ErrorType,
-  data?: Record<string, unknown> | Record<string, unknown>[] | string | number | boolean, 
+  data?:
+    | Record<string, unknown>
+    | Record<string, unknown>[]
+    | string
+    | number
+    | boolean,
   error?: Error
 ) {
   res
     .status(type)
-    .json({ data, error, success: false })
-    .end()
+    .json({ ...(data && !isEmpty(data) && { data }), error, success: false })
+    .end();
 }

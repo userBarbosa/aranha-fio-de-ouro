@@ -2,7 +2,7 @@
 
 import { createHash, validateHash } from "../../utils/encrypt/index";
 import logger from "../../utils/logger";
-import { RandomPassword } from "../../utils/random";
+import { RandomPassword } from "../../utils/utils";
 import { ErrorMetrics } from "../../utils/response";
 import { createToken } from "../../utils/token";
 import { TokenUserPayload } from "../../utils/token/types";
@@ -47,7 +47,7 @@ export async function CreateUserModel(
 export async function GetUserToken(
   user: User,
   expMilli?: number
-): Promise<string> {
+): Promise<{ token: string; expiresIn: number }> {
   const log = logger.child({
     func: "GetUserToken",
     layer: "model",
@@ -107,7 +107,7 @@ export async function LoginUser(
 
     return {
       ...tokenUserPayload,
-      token: newToken,
+      ...newToken,
     };
   } catch (error) {
     log.error("error logging user", error);
