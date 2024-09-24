@@ -14,6 +14,8 @@ export enum ErrorType {
 
 export enum ErrorMetrics {
   InvalidCredentials = "INV_CREDS",
+  InvalidToken = "INV_TOKEN",
+  NotAuthorized = "NOT_AUTHORIZED",
 }
 
 export function SuccessResponse(

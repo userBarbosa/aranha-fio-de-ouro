@@ -5,7 +5,7 @@ import { config } from "dotenv";
 config();
 
 type Environment = {
-  PORT: number;
+  API_PORT: number;
   MONGODB_URI: string;
   MONGODB_DATABASE: string;
   TOKEN_SECRET: string;
@@ -13,7 +13,7 @@ type Environment = {
 };
 
 export const environment: Environment = {
-  PORT: parseInt(process.env.PORT || "4000"),
+  API_PORT: parseInt(process.env.API_PORT || "4000"),
   MONGODB_URI: process.env.MONGODB_URI || "",
   MONGODB_DATABASE: process.env.MONGODB_DATABASE || "",
   TOKEN_SECRET: process.env.TOKEN_SECRET || "",

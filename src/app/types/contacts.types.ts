@@ -1,5 +1,6 @@
 "use strict";
 
+import { ObjectId } from 'mongodb';
 import { GenericDTO } from "./../../services/database/mongodb/types";
 
 export type Contact = {
@@ -8,7 +9,7 @@ export type Contact = {
   address?: string;
   phone: string;
   email: string;
-  groupId: string;
+  groupId: ObjectId;
 };
 
 export type ContactDTO = {
@@ -16,5 +17,5 @@ export type ContactDTO = {
   address?: string;
   phone: string;
   email: string;
-  groupId: string;
+  groupId: ObjectId;
 } & GenericDTO;

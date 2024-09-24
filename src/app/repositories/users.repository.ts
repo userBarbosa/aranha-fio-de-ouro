@@ -1,7 +1,7 @@
 "use strict";
 
 import { insertOne, selectOne } from "../../services/database";
-import { UserDTO } from "../types/users.types";
+import { User, UserDTO } from "../types/users.types";
 
 const COLLECTION = "users";
 

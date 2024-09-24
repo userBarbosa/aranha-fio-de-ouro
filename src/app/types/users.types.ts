@@ -1,8 +1,9 @@
 "use strict";
+import { ObjectId } from 'mongodb';
 import { GenericDTO } from "../../services/database/mongodb/types";
 
 export type User = {
-  id?: string;
+  id?: ObjectId | string;
   name: string;
   email: string;
   groups?: string[];

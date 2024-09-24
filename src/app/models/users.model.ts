@@ -98,7 +98,7 @@ export async function LoginUser(
     }
 
     const tokenUserPayload: TokenUserPayload = {
-      id: existingUser._id,
+      id: existingUser._id.toString(),
       name: existingUser.name,
       email: existingUser.email,
       groups: existingUser.groups,

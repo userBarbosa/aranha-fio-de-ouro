@@ -32,7 +32,7 @@ export async function isGroupAdmin(
       } as Error);
     }
     const isAdmin = group.members.some(
-      (member: any) => member.userId === userId && member.isAdmin
+      (member: any) => member.userId.toString() === userId && member.isAdmin
     );
 
     if (!isAdmin) {
