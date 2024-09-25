@@ -65,12 +65,9 @@ export async function NewGroup(group: Group): Promise<string | null> {
   }
 }
 
-export async function AppendMembers(group: Group): Promise<boolean> {
+export async function AppendMembers(group: GroupDTO): Promise<boolean> {
   try {
-    
-    const query = { _id: new ObjectId(group.id) };
-    console.log(group.id);
-    
+    const query = { _id: new ObjectId(group._id) };
     const result = await updateOne(COLLECTION, query, group);
     return result;
   } catch (error) {
