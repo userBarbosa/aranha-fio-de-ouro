@@ -86,3 +86,17 @@ export async function updateFirst(
 
   return false;
 }
+
+export async function imHealthy(): Promise<boolean> {
+  try {
+    await mongoDbClient.connect();
+    // const data = await mongoDbClient.db(mongoDataBase).command({serverStatus: 1}); 
+    const data = await mongoDbClient.db(mongoDataBase).command({ ping: 1 });
+    return data.ok === 1;
+  } catch (error) {
+    logger.error("MONGO ERROR: I'M NOT HEALTHY HELP", error);
+    return false;
+  } finally {
+    mongoDbClient.close();
+  }
+}

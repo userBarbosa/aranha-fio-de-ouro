@@ -1,6 +1,6 @@
 "use strict";
 
-import { findFirst, insert, updateFirst } from "./mongodb";
+import { findFirst, imHealthy, insert, updateFirst } from "./mongodb";
 import { CustomMongoErrors } from "./mongodb/types";
 
 export async function selectOne<T>(
@@ -35,4 +35,8 @@ export async function updateOne(
       updatedAt: date,
     },
   });
+}
+
+export async function dbHealthCheck() {
+  return await imHealthy();
 }
