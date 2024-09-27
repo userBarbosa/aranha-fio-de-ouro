@@ -4,7 +4,7 @@ import { validateTokenMiddleware } from "../../utils/token";
 import {
   CreateContact,
   DeleteContact,
-  GetContacts,
+  GetContact,
   UpdateContact,
 } from "../controllers/contacts.controller";
 
@@ -17,7 +17,7 @@ contactRouter.post(
   CreateContact
 );
 
-contactRouter.get(`${baseContactPath}`, validateTokenMiddleware, GetContacts);
+contactRouter.get(`${baseContactPath}/:id`, validateTokenMiddleware, GetContact);
 
 contactRouter.put(
   `${baseContactPath}/:id`,

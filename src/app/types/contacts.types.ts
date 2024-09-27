@@ -9,7 +9,7 @@ export type Contact = {
   address?: string;
   phone: string;
   email: string;
-  groupId: ObjectId;
+  groupId: ObjectId | string;
 };
 
 export type ContactDTO = {
@@ -17,5 +17,5 @@ export type ContactDTO = {
   address?: string;
   phone: string;
   email: string;
-  groupId: ObjectId;
+  groupId: ObjectId | string;
 } & GenericDTO;

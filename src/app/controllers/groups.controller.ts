@@ -9,8 +9,13 @@ import {
   SuccessResponse,
 } from "../../utils/response";
 import { RequestWithToken } from "../../utils/token/types";
-import { AddMemberToGroup, CreateGroup, ReadGroup } from "../models/groups.model";
+import {
+  AddMemberToGroup,
+  CreateGroup,
+  ReadGroup,
+} from "../models/groups.model";
 import { Group } from "../types/groups.types";
+import { Contact } from "../types/contacts.types";
 
 export async function Create(req: Request, res: Response) {
   const log = logger.child({ func: "Create", layer: "controller" });
@@ -72,7 +77,7 @@ export async function AddMembers(req: Request, res: Response) {
     }
 
     const updated = await AddMemberToGroup(id, members);
-    return SuccessResponse(res, {updated});
+    return SuccessResponse(res, { updated });
   } catch (error) {
     log.error("error getting group", error);
     const customError = error as any;
@@ -86,10 +91,61 @@ export async function AddMembers(req: Request, res: Response) {
   }
 }
 
-export async function GetGroups(req: Request, res: Response) {}
+export async function GetGroups(req: Request, res: Response) {
+  const log = logger.child({ func: "GetGroup", layer: "controller" });
+  try {
+    const user = (req as RequestWithToken).user;
+    // const { id } = req.params;
+    // if (!id) {
+    //   return ErrorResponse(res, ErrorType.BadRequest, {}, {
+    //     message: "missing required fields",
+    //   } as Error);
+    // }
+
+    // const group: Group = await ReadGroup(id, user.id);
+    const groups: Group[] = [{
+      id: "1",
+      name: "Group 1",
+      description: "Group 1 description",
+      members: [],
+      createdBy: user.id,
+      updatedBy: user.id
+    }];
+    return SuccessResponse(res, groups);
+  } catch (error) {
+    log.error("error getting group", error);
+    const customError = error as any;
+    if (
+      customError?.metric &&
+      customError.metric === ErrorMetrics.NotAuthorized
+    ) {
+      return ErrorResponse(res, ErrorType.Forbidden, {}, error as Error);
+    }
+    ErrorResponse(res, ErrorType.InternalServerError, {}, error as Error);
+  }
+}
 
 export async function UpdateGroup(req: Request, res: Response) {}
 export async function DeleteGroup(req: Request, res: Response) {}
 export async function AddContactToGroup(req: Request, res: Response) {}
-export async function GetGroupContacts(req: Request, res: Response) {}
+export async function GetGroupContacts(req: Request, res: Response) {
+  const id = req.params["id"];
+  const contacts: Contact[] = [
+    {
+      id: "1",
+      name: "John Doe",
+      phone: "123456789",
+      email: "john@example.com",
+      groupId: id || "1",
+    },
+    {
+      id: "2",
+      name: "Jane Doe",
+      phone: "987654321",
+      email: "jane@example.com",
+      groupId: id || "1",
+    }
+  ];
+  SuccessResponse(res, { contacts });
+}
 export async function RemoveContactFromGroup(req: Request, res: Response) {}
